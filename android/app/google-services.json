@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "715019730395",
+    "firebase_url": "https://fir-89534.firebaseio.com",
+    "project_id": "fir-89534",
+    "storage_bucket": "fir-89534.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715019730395:android:bae923bc6abe1bda1cbbfe",
+        "android_client_info": {
+          "package_name": "com.example.youtubeui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715019730395-oag8bjq7ec03bhtekis0mpm17b9vp4hr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa1aWxU0YFlRl3EnE1g7HKLHb4fc5tulg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715019730395-oag8bjq7ec03bhtekis0mpm17b9vp4hr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
