@@ -11,6 +11,7 @@ class YoutubeModel {
   final String likeCount;
   final String dislikeCount;
   final String subscriber;
+  final String URL;
 
   YoutubeModel(
       {this.title,
@@ -22,7 +23,8 @@ class YoutubeModel {
       this.viewCount,
       this.likeCount,
       this.subscriber,
-      this.dislikeCount});
+      this.dislikeCount,
+      this.URL});
 }
 
 class NotificationModel {

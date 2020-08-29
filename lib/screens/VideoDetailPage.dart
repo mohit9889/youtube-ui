@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:youtubeui/components/VideoList.dart';
 import 'package:youtubeui/modal/data.dart';
 
@@ -13,6 +17,24 @@ class VideoDetailPage extends StatefulWidget {
 }
 
 class _VideoDetailPageState extends State<VideoDetailPage> {
+
+  YoutubePlayerController _controller;
+  bool liked = false;
+  int likeCount = Random().nextInt(3000);
+
+  @override
+  void initState() {
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayerController.convertUrlToId(widget.detail.URL),
+      params: YoutubePlayerParams(
+        showFullscreenButton: true,
+        autoPlay: true,
+        startAt: Duration(seconds: 0),
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _layout = [
@@ -44,9 +66,10 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
       margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       width: MediaQuery.of(context).size.width,
       height: 200.0,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage(widget.detail.thumbNail), fit: BoxFit.cover)),
+      child: YoutubePlayerIFrame(
+        controller: _controller,
+        aspectRatio: 16/9,
+      ),
     );
   }
 
@@ -63,9 +86,40 @@ class _VideoDetailPageState extends State<VideoDetailPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _buttonColumn(Icons.thumb_up, widget.detail.likeCount),
+              GestureDetector(
+                onTap:(){
+                  setState(() {
+                    if(liked){
+                      liked = false;
+                      likeCount-=1;
+                    }else{
+                      liked = true;
+                      likeCount+=1;
+                    }
+                  });
+                },
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Icon(
+                        Icons.thumb_up,
+                        color:liked? Colors.blue:Colors.grey[700],
+                      ),
+                    ),
+                    Text(
+                      likeCount.toString(),
+                      style: TextStyle(color: Colors.grey[700]),
+                    )
+                  ],
+                ),
+              ),
               _buttonColumn(Icons.thumb_down, widget.detail.dislikeCount),
-              _buttonColumn(Icons.share, "Share"),
+              GestureDetector(
+                onTap: (){
+                  Share.share("Check out this new video at ${widget.detail.URL}");
+                },
+                  child: _buttonColumn(Icons.share, "Share")),
               _buttonColumn(Icons.cloud_download, "Download"),
               _buttonColumn(Icons.playlist_add, "Save"),
             ],

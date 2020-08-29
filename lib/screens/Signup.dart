@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtubeui/screens/HomePage.dart';
 import 'package:youtubeui/screens/Login.dart';
 
 class Signup extends StatelessWidget {
+  String email,password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +41,9 @@ class Signup extends StatelessWidget {
               height: 20.0,
             ),
             TextField(
+              onChanged: (val){
+                email = val;
+              },
               cursorColor: Colors.red,
               decoration: InputDecoration(
                 labelText: "Enter Email",
@@ -57,6 +62,9 @@ class Signup extends StatelessWidget {
               height: 20.0,
             ),
             TextField(
+              onChanged: (val){
+                password = val;
+              },
               cursorColor: Colors.red,
               decoration: InputDecoration(
                 labelText: "Enter Password",
@@ -83,8 +91,10 @@ class Signup extends StatelessWidget {
                   style: TextStyle(fontSize: 18.0),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  });
                 },
                 color: Colors.red,
                 colorBrightness: Brightness.dark,
